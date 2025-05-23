@@ -6,5 +6,7 @@ public class repotest{
 		con.println("Hello world");
 		con.println("TGIF");
 		con.println("CPT Time");
+		con.println("Relax");
+		con.println("Work");
 	}
 }
