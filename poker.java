@@ -7,6 +7,7 @@ public class poker{
 		int intRand;
 		int intCount;
 		int intCount2;
+		String strOption;
 		String strName;
 		
 		intCard = new int[52][3];
