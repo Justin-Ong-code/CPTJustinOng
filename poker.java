@@ -15,19 +15,20 @@ public class poker{
 		con.println("Play Game (type '1')");
 		con.println("View Leaderboard (type '2')");
 		con.println("Quit Option (type '3')");
-		strOption = con.readLine();
+		//strOption = con.readLine();
+		strOption = "1";
 		
 		if(strOption.equals("1")){
-			con.println("Enter your name:");
-			strName = con.readLine();
+			//con.println("Enter your name:");
+			//strName = con.readLine();
 			int intMoney;
 			int intBet;
-			intMoney = 1000;
+			//intMoney = 1000;
 			
-			con.println("Current Money: $"+intMoney);
-			con.println("What is your bet?");
-			intBet = con.readInt();
-			intMoney = intMoney - intBet;
+			//con.println("Current Money: $"+intMoney);
+			//con.println("What is your bet?");
+			//intBet = con.readInt();
+			//intMoney = intMoney - intBet;
 			
 			// Before Sorting
 			// Generates the 52 card each with a random number used for bubble sorting
@@ -114,7 +115,74 @@ public class poker{
 			con.println("New Hand:");
 			for(intCount = 0; intCount < 5; intCount++){
 				con.println("Card "+(intCount+1)+": "+intHand[intCount][0]+"-"+intHand[intCount][1]);
-			} 
+			}
+			
+			int intSuit;
+			intSuit = 0;
+			
+			for(intCount = 0; intCount < 5; intCount++){
+				if(intHand[intCount][1] == intHand[0][1]){
+					intSuit = intSuit + 1;
+				}
+			}
+			for(intCount2 = 0; intCount2 < 5-1; intCount2++){
+				for(intCount = 0; intCount < 5-1; intCount++){
+					if(intHand[intCount][0] > intHand[intCount+1][0]){
+						intValueTemp = intHand[intCount][0];
+						intHand[intCount][0] = intHand[intCount+1][0];
+						intHand[intCount+1][0] = intValueTemp;
+				
+						intSuitTemp = intHand[intCount][1];
+						intHand[intCount][1] = intHand[intCount+1][1];
+						intHand[intCount+1][1] = intSuitTemp;
+					}
+				}
+			}
+			con.println("New Hand:");
+			for(intCount = 0; intCount < 5; intCount++){
+				con.println("Card "+(intCount+1)+": "+intHand[intCount][0]+"-"+intHand[intCount][1]);
+			}
+			
+			int intNextValue;
+			intNextValue = intHand[0][0];
+			int intStraight;
+			intStraight = 1;
+			int intSameValues;
+			intSameValues = 1;
+			
+			for(intCount = 1; intCount < 5; intCount++){
+				intNextValue = intNextValue + 1;
+				if(intHand[intCount][0] == intNextValue){
+					intStraight = intStraight + 1;
+				}
+			}
+			for(intCount = 0; intCount < 5-1; intCount++){
+				if(intHand[intCount][0] == intHand[intCount+1][0]){
+					intSameValues = intSameValues + 1;
+				}
+			}
+			
+			if(intSuit == 5){
+				if(intHand[0][0] == 1 && intHand[1][0] == 10 && intHand[2][0] == 11 && intHand[3][0] == 12 && intHand[4][0] == 13){
+					con.println("Royal Flush");
+				}else if(intStraight == 5){
+					con.println("Straight Flush");
+				}else{
+					con.println("Flush");
+				}
+			}else{
+				if(intSameValues == 4){
+					if(intHand[2][0] == intHand[1][0] && intHand[2][0] == intHand[3][0]){
+						con.println("Four of a Kind");
+					}else{
+						con.println("Full House");
+					}
+				}else if(intSameValues == 3){
+					
+				}else if(intStraight == 5){
+					con.println("Straight");
+				}
+			}
 		}
 	}
 }
