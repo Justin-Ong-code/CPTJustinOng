@@ -26,7 +26,14 @@ public class poker{
 			strName = con.readLine();
 			double dblMoney;
 			double dblBet;
-			dblMoney = 1000;
+			
+			// Provides a starting amount of cash at $1000 but double the amount if the name is "statitan"
+			if(strName.equals("statitan")){
+				con.println("You entered the special name, start with $2000 instead of $1000.");
+				dblMoney = 2000;
+			}else{
+				dblMoney = 1000;
+			}
 			
 			while(strContinue.equalsIgnoreCase("y")){
 				con.println("Current Money: $"+dblMoney);
@@ -54,12 +61,7 @@ public class poker{
 					}
 					intCard[intCount][2] = intRand;
 				}
-		
-				// con.println("Before Sorting");
-				// for(intCount = 0; intCount < 52; intCount++){
-					// con.println(intCard[intCount][0]+"-"+intCard[intCount][1]+"-"+intCard[intCount][2]);
-				// }
-		
+	
 				// After Sorting
 
 				int intValueTemp;
@@ -85,10 +87,6 @@ public class poker{
 					}
 				}
 		
-				// con.println("\n\nAfter Sorting");
-				// for(intCount = 0; intCount < 10; intCount++){
-					// con.println(intCard[intCount][0]+"-"+intCard[intCount][1]+"-"+intCard[intCount][2]);
-				// }
 			
 				int intHand[][];
 				intHand = new int[5][2];
@@ -100,8 +98,10 @@ public class poker{
 				}
 		
 				// Prints out the hand 
+				// Uses the number of this suits and value to print the corresponding suits and values
 				con.println("Hand:");
 				for(intCount = 0; intCount < 5; intCount++){
+					// 1 = Ace, 11 = Jack, 12 = Queen, 13 = King
 					if(intHand[intCount][0] == 1){
 						strValue = "Ace";
 					}else if(intHand[intCount][0] == 11){
@@ -113,7 +113,7 @@ public class poker{
 					}else{
 						strValue = intHand[intCount][0] + "";
 					}
-					
+					// 1 = Diamonds, 2 = Clubs, 3 = Hearts, 4 = Spades
 					if(intHand[intCount][1] == 1){
 						strSuit = "Diamonds";
 					}else if(intHand[intCount][1] == 2){
@@ -123,7 +123,6 @@ public class poker{
 					}else{
 						strSuit = "Spades";
 					}
-					
 					con.println("Card "+(intCount+1)+": "+strValue+"-"+strSuit);
 				}
 		
@@ -131,17 +130,20 @@ public class poker{
 				int intNextCard;
 				intNextCard = 0;
 				
+				// Asks the user if they want to switch any of the 5 cards the hav
 				for(intCount = 0; intCount < 5;intCount++){
 					con.println("Do you want to switch Card "+(intCount+1)+"? (Type 'y' for yes and 'n' for no)");
 					strSwitch = con.readLine();
-				
+					
+					// Switches the chosen card with the next card at the top of the deck
+					// In other words, the card with the next smallest random number
 					if(strSwitch.equalsIgnoreCase("y")){
 						intHand[intCount][0] = intCard[intNextCard+5][0];
 						intHand[intCount][1] = intCard[intNextCard+5][1];
 						intNextCard = intNextCard + 1;
 					}
 				}
-		
+				// Prints the new hand with the switched cards using the same rules as the previous hand
 				con.println("New Hand:");
 				for(intCount = 0; intCount < 5; intCount++){
 					if(intHand[intCount][0] == 1){
@@ -155,7 +157,6 @@ public class poker{
 					}else{
 						strValue = intHand[intCount][0] + "";
 					}
-					
 					if(intHand[intCount][1] == 1){
 						strSuit = "Diamonds";
 					}else if(intHand[intCount][1] == 2){
@@ -165,7 +166,6 @@ public class poker{
 					}else{
 						strSuit = "Spades";
 					}
-					
 					con.println("Card "+(intCount+1)+": "+strValue+"-"+strSuit);
 				}
 				
@@ -183,33 +183,6 @@ public class poker{
 						}
 					}
 				}
-				
-				con.println("New Hand:");
-				for(intCount = 0; intCount < 5; intCount++){
-					if(intHand[intCount][0] == 1){
-						strValue = "Ace";
-					}else if(intHand[intCount][0] == 11){
-						strValue = "Jack";
-					}else if(intHand[intCount][0] == 12){
-						strValue = "Queen";
-					}else if(intHand[intCount][0] == 13){
-						strValue = "King";
-					}else{
-						strValue = intHand[intCount][0] + "";
-					}
-					
-					if(intHand[intCount][1] == 1){
-						strSuit = "Diamonds";
-					}else if(intHand[intCount][1] == 2){
-						strSuit = "Clubs";
-					}else if(intHand[intCount][1] == 3){
-						strSuit = "Hearts";
-					}else{
-						strSuit = "Spades";
-					}
-					
-					con.println("Card "+(intCount+1)+": "+strValue+"-"+strSuit);
-				}
 			
 				int intNextValue;
 				intNextValue = intHand[0][0];
@@ -224,36 +197,44 @@ public class poker{
 				intThrees = 0;
 				int intFours;
 				intFours = 0;
-				
+					
+				// Identifies if all cards have the same suit or not
 				for(intCount = 0; intCount < 5; intCount++){
 					if(intHand[intCount][1] == intHand[0][1]){
 						intSuit = intSuit + 1;
 					}
 				}
 				
+				// Identifies if all the cards are consecutive by value
 				for(intCount = 1; intCount < 5; intCount++){
 					intNextValue = intNextValue + 1;
 					if(intHand[intCount][0] == intNextValue){
 						intStraight = intStraight + 1;
 					}
 				}
+				// Identifies adjacent pairs by value
 				for(intCount = 0; intCount < 5-1; intCount++){
 					if(intHand[intCount][0] == intHand[intCount+1][0]){
 						intPairs = intPairs + 1;
 					}
 				}
+				// Identifies adjacent trios by value
 				for(intCount = 0; intCount < 5-2; intCount++){
 					if(intHand[intCount][0] == intHand[intCount+2][0]){
 						intThrees = intThrees + 1;
 					}
 				}
+				// Identifies groups of four by value
 				for(intCount = 0; intCount < 5-3; intCount++){
 					if(intHand[intCount][0] == intHand[intCount+3][0]){
 						intFours = intFours + 1;
 					}
 				}
-			
+				
+				// Checks if all cards have the same suit
 				if(intSuit == 5){
+					// Checks whether the cards match a royal flush, straight flush, or flush 
+					// Provides a multiplier on the bet and rewards the according amount
 					if(intHand[0][0] == 1 && intHand[1][0] == 10 && intHand[2][0] == 11 && intHand[3][0] == 12 && intHand[4][0] == 13){
 						con.println("Royal Flush");
 						dblBet = dblBet * 800;
@@ -265,6 +246,8 @@ public class poker{
 						dblBet = dblBet * 6;
 					}
 				}else{
+					// Determines a four of a kind, full house, three of a kind, two pair, and straight
+					// Provides a multiplier on the bet and rewards the according amount
 					if(intFours == 1){
 						con.println("Four of a Kind");
 						dblBet = dblBet * 25;
@@ -287,12 +270,22 @@ public class poker{
 						dblBet = 0;
 					}
 				}
+				// Determines the amount of money left after the game
 				dblMoney = dblMoney + dblBet;
-				con.println(dblMoney);
+				con.println("Remaining Cash: $"+dblMoney);
 				
-				con.println("Do you wish to continue? ('y' for yes, 'n' for no)");
-				strContinue = con.readLine();
+				// Determines if there is any cash left and if the user wants to continue
+				// If the user continues, the code loops to the top
+				if(dblMoney > 0){
+					con.println("Do you wish to continue? ('y' for yes, 'n' for no)");
+					strContinue = con.readLine();
+				}else{
+					con.println("No more money remaining.");
+					strContinue = "n";
+				}
 			}
+			
+			// Prints the profile of the user to leaderboard.txt if they're done
 			TextOutputFile leaderboard = new TextOutputFile("leaderboard.txt", true);
 			leaderboard.println(strName);
 			leaderboard.println(dblMoney);
@@ -302,25 +295,31 @@ public class poker{
 			double dblScore[];
 			double dblScoreTemp;
 			int intScoreCount;
-			intScoreCount = 0;
 			String strProfile[];
 			String strProfileTemp;
 			
+			intScoreCount = 0;
+			
+			// Reads the amount of profiles in the file
 			while(scores.eof() != true){
 				strProfileTemp = scores.readLine();
 				dblScoreTemp = scores.readDouble();
 				intScoreCount++;
 			}
 			scores.close();
+			
+			// Creates arrays according to the amount of profiles
 			strProfile = new String[intScoreCount];
 			dblScore = new double[intScoreCount];
 			scores = new TextInputFile("leaderboard.txt");
 			
+			// Reads the specific files
 			for(intCount = 0; intCount < intScoreCount; intCount++){
 				strProfile[intCount] = scores.readLine();
 				dblScore[intCount] = scores.readDouble();
 			}
 			
+			// Sorts the profiles in order from greatest to least amount of money
 			for(intCount2 = 0; intCount2 < intScoreCount - 1; intCount2++){
 				for(intCount = 0; intCount < intScoreCount - 1; intCount++){
 					if(dblScore[intCount] < dblScore[intCount+1]){
@@ -335,9 +334,18 @@ public class poker{
 				}
 			}
 			
+			// Prints the leaderboard
 			for(intCount = 0; intCount < intScoreCount; intCount++){
 				con.println((intCount+1)+": "+strProfile[intCount]+" - $"+dblScore[intCount]);
 			}
+		}else if(strOption.equals("3")){
+			// Quits the program
+			System.exit(0);
+		}else if(strOption.equals("4")){
+			// Hidden option that prints a joke
+			con.println("When a poker player shares their secrets,");
+			con.sleep(1500);
+			con.println("it's a full-house of revelations.");
 		}
 	}
 }
