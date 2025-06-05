@@ -1,16 +1,17 @@
 import arc.*;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 public class poker{
 	public static void main(String[] args){
 		Console con = new Console("Poker", 1280, 720);
+		BufferedImage imgLogo = con.loadImage("PokerLogo.png");
 		int intCard[][];
 		int intRand;
 		int intCount;
 		int intCount2;
 		String strOption;
 		String strName;
-		String strSuit;
-		String strValue;
 		String strContinue;
 		strContinue = "y";
 		
@@ -20,6 +21,7 @@ public class poker{
 		con.println("View Leaderboard (type '2')");
 		con.println("Quit Option (type '3')");
 		strOption = con.readLine();
+		con.clear();
 		
 		if(strOption.equals("1")){
 			con.println("Enter your name:");
@@ -63,7 +65,6 @@ public class poker{
 				}
 	
 				// After Sorting
-
 				int intValueTemp;
 				int intSuitTemp;
 				int intRandTemp;
@@ -86,7 +87,6 @@ public class poker{
 						}
 					}
 				}
-		
 			
 				int intHand[][];
 				intHand = new int[5][2];
@@ -100,31 +100,7 @@ public class poker{
 				// Prints out the hand 
 				// Uses the number of this suits and value to print the corresponding suits and values
 				con.println("Hand:");
-				for(intCount = 0; intCount < 5; intCount++){
-					// 1 = Ace, 11 = Jack, 12 = Queen, 13 = King
-					if(intHand[intCount][0] == 1){
-						strValue = "Ace";
-					}else if(intHand[intCount][0] == 11){
-						strValue = "Jack";
-					}else if(intHand[intCount][0] == 12){
-						strValue = "Queen";
-					}else if(intHand[intCount][0] == 13){
-						strValue = "King";
-					}else{
-						strValue = intHand[intCount][0] + "";
-					}
-					// 1 = Diamonds, 2 = Clubs, 3 = Hearts, 4 = Spades
-					if(intHand[intCount][1] == 1){
-						strSuit = "Diamonds";
-					}else if(intHand[intCount][1] == 2){
-						strSuit = "Clubs";
-					}else if(intHand[intCount][1] == 3){
-						strSuit = "Hearts";
-					}else{
-						strSuit = "Spades";
-					}
-					con.println("Card "+(intCount+1)+": "+strValue+"-"+strSuit);
-				}
+				pokermethods.handprint(intHand, con);
 		
 				String strSwitch;
 				int intNextCard;
@@ -143,31 +119,11 @@ public class poker{
 						intNextCard = intNextCard + 1;
 					}
 				}
+				con.clear();
 				// Prints the new hand with the switched cards using the same rules as the previous hand
+				con.sleep(1000);
 				con.println("New Hand:");
-				for(intCount = 0; intCount < 5; intCount++){
-					if(intHand[intCount][0] == 1){
-						strValue = "Ace";
-					}else if(intHand[intCount][0] == 11){
-						strValue = "Jack";
-					}else if(intHand[intCount][0] == 12){
-						strValue = "Queen";
-					}else if(intHand[intCount][0] == 13){
-						strValue = "King";
-					}else{
-						strValue = intHand[intCount][0] + "";
-					}
-					if(intHand[intCount][1] == 1){
-						strSuit = "Diamonds";
-					}else if(intHand[intCount][1] == 2){
-						strSuit = "Clubs";
-					}else if(intHand[intCount][1] == 3){
-						strSuit = "Hearts";
-					}else{
-						strSuit = "Spades";
-					}
-					con.println("Card "+(intCount+1)+": "+strValue+"-"+strSuit);
-				}
+				pokermethods.handprint(intHand, con);
 				
 				// Rearranges cards in order of value to make identifying matching cards and straights easier for the computer
 				for(intCount2 = 0; intCount2 < 5-1; intCount2++){
@@ -186,7 +142,6 @@ public class poker{
 			
 				int intNextValue;
 				intNextValue = intHand[0][0];
-				
 				int intSuit;
 				intSuit = 0;
 				int intStraight;
@@ -204,7 +159,6 @@ public class poker{
 						intSuit = intSuit + 1;
 					}
 				}
-				
 				// Identifies if all the cards are consecutive by value
 				for(intCount = 1; intCount < 5; intCount++){
 					intNextValue = intNextValue + 1;
@@ -231,45 +185,10 @@ public class poker{
 					}
 				}
 				
-				// Checks if all cards have the same suit
-				if(intSuit == 5){
-					// Checks whether the cards match a royal flush, straight flush, or flush 
-					// Provides a multiplier on the bet and rewards the according amount
-					if(intHand[0][0] == 1 && intHand[1][0] == 10 && intHand[2][0] == 11 && intHand[3][0] == 12 && intHand[4][0] == 13){
-						con.println("Royal Flush");
-						dblBet = dblBet * 800;
-					}else if(intStraight == 5){
-						con.println("Straight Flush");
-						dblBet = dblBet * 50;
-					}else{
-						con.println("Flush");
-						dblBet = dblBet * 6;
-					}
-				}else{
-					// Determines a four of a kind, full house, three of a kind, two pair, and straight
-					// Provides a multiplier on the bet and rewards the according amount
-					if(intFours == 1){
-						con.println("Four of a Kind");
-						dblBet = dblBet * 25;
-					}else if(intThrees == 1){
-						if(intPairs == 3){
-							con.println("Full House");
-							dblBet = dblBet * 9;
-						}else{
-							con.println("Three of a Kind");
-							dblBet = dblBet * 3;
-						}
-					}else if(intPairs == 2){
-						con.println("Two Pair");
-						dblBet = dblBet * 2;
-					}else if(intStraight == 5){
-						con.println("Straight");
-						dblBet = dblBet * 4;
-					}else{
-						con.println("Loss");
-						dblBet = 0;
-					}
-				}
+				// Determines the type of poker hand the user has with a returning bet
+				con.sleep(1500);
+				dblBet = pokermethods.pokerhands(intHand, intSuit, intStraight, intPairs, intThrees, intFours, dblBet, con);
+				
 				// Determines the amount of money left after the game
 				dblMoney = dblMoney + dblBet;
 				con.println("Remaining Cash: $"+dblMoney);
@@ -335,17 +254,18 @@ public class poker{
 			}
 			
 			// Prints the leaderboard
+			con.println("Leaderboard:");
 			for(intCount = 0; intCount < intScoreCount; intCount++){
 				con.println((intCount+1)+": "+strProfile[intCount]+" - $"+dblScore[intCount]);
 			}
 		}else if(strOption.equals("3")){
 			// Quits the program
-			System.exit(0);
+			con.closeConsole();
 		}else if(strOption.equals("4")){
 			// Hidden option that prints a joke
 			con.println("When a poker player shares their secrets,");
 			con.sleep(1500);
 			con.println("it's a full-house of revelations.");
 		}
-	}
+	}	
 }
