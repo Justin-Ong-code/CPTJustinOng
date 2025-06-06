@@ -5,18 +5,34 @@ import java.awt.image.BufferedImage;
 public class poker{
 	public static void main(String[] args){
 		Console con = new Console("Poker", 1280, 720);
-		BufferedImage imgLogo = con.loadImage("PokerLogo.png");
+		BufferedImage imgLogo = con.loadImage("pokerlogo.jpg");
 		int intCard[][];
 		int intRand;
 		int intCount;
 		int intCount2;
+		int intGamesPlayed;
+		int intY;
 		String strOption;
 		String strName;
 		String strContinue;
+		
+		intGamesPlayed = 0;
+		intY = 0;
 		strContinue = "y";
 		
 		intCard = new int[52][3];
 		
+		while(intY < 720){
+			con.setDrawColor(Color.BLACK);
+			con.fillRect(0, 0, 1280, 720);
+			con.drawImage(imgLogo, 320, intY);
+			intY = intY + 2;
+			
+			con.repaint();
+			con.sleep(10);
+		}
+
+		// Provides the user with options
 		con.println("Play Game (type '1')");
 		con.println("View Leaderboard (type '2')");
 		con.println("Quit Option (type '3')");
@@ -32,13 +48,16 @@ public class poker{
 			// Provides a starting amount of cash at $1000 but double the amount if the name is "statitan"
 			if(strName.equals("statitan")){
 				con.println("You entered the special name, start with $2000 instead of $1000.");
+				con.sleep(2500);
 				dblMoney = 2000;
 			}else{
 				dblMoney = 1000;
 			}
+			con.clear();
 			
 			while(strContinue.equalsIgnoreCase("y")){
 				con.println("Current Money: $"+dblMoney);
+				con.sleep(500);
 				con.println("What is your bet?");
 				dblBet = con.readDouble();
 				while(dblBet > dblMoney){
@@ -99,7 +118,12 @@ public class poker{
 		
 				// Prints out the hand 
 				// Uses the number of this suits and value to print the corresponding suits and values
+				con.clear();
+				con.println("Current Money: $"+dblMoney);
+				con.println("Bet: $"+dblBet);
+				con.sleep(1000);
 				con.println("Hand:");
+				con.sleep(1000);
 				pokermethods.handprint(intHand, con);
 		
 				String strSwitch;
@@ -121,8 +145,11 @@ public class poker{
 				}
 				con.clear();
 				// Prints the new hand with the switched cards using the same rules as the previous hand
+				con.println("Current Money: $"+dblMoney);
+				con.println("Bet: $"+dblBet);
 				con.sleep(1000);
 				con.println("New Hand:");
+				con.sleep(1000);
 				pokermethods.handprint(intHand, con);
 				
 				// Rearranges cards in order of value to make identifying matching cards and straights easier for the computer
@@ -188,10 +215,15 @@ public class poker{
 				// Determines the type of poker hand the user has with a returning bet
 				con.sleep(1500);
 				dblBet = pokermethods.pokerhands(intHand, intSuit, intStraight, intPairs, intThrees, intFours, dblBet, con);
+				con.sleep(3000);
 				
 				// Determines the amount of money left after the game
+				con.clear();
 				dblMoney = dblMoney + dblBet;
-				con.println("Remaining Cash: $"+dblMoney);
+				con.println("Current Money: $"+dblMoney);
+				
+				// Keeps track of the amount of games played
+				intGamesPlayed = intGamesPlayed + 1;
 				
 				// Determines if there is any cash left and if the user wants to continue
 				// If the user continues, the code loops to the top
@@ -203,6 +235,20 @@ public class poker{
 					strContinue = "n";
 				}
 			}
+			
+			// Shows the final results
+			con.clear();
+			con.println("Final Results:");
+			con.sleep(750);
+			con.println("Name: "+strName);
+			con.sleep(750);
+			con.print("Games Played: ");
+			con.sleep(750);
+			con.println(intGamesPlayed);
+			con.sleep(750);
+			con.print("Final Score: ");
+			con.sleep(750);
+			con.println("$"+dblMoney);
 			
 			// Prints the profile of the user to leaderboard.txt if they're done
 			TextOutputFile leaderboard = new TextOutputFile("leaderboard.txt", true);
@@ -255,8 +301,10 @@ public class poker{
 			
 			// Prints the leaderboard
 			con.println("Leaderboard:");
+			con.sleep(1000);
 			for(intCount = 0; intCount < intScoreCount; intCount++){
 				con.println((intCount+1)+": "+strProfile[intCount]+" - $"+dblScore[intCount]);
+				con.sleep(500);
 			}
 		}else if(strOption.equals("3")){
 			// Quits the program

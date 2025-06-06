@@ -79,6 +79,8 @@ public class pokermethods{
 				dblBet = 0;
 			}
 		}
+		con.sleep(1000);
+		con.println("+$"+dblBet);
 		return dblBet;
 	}
 }
