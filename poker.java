@@ -35,9 +35,9 @@ public class poker{
 		}
 
 		// Provides the user with options
-		con.println("(P)lay Game");
-		con.println("(V)iew Leaderboard");
-		con.println("(Q)uit Option");
+		con.println("(p)lay Game");
+		con.println("(v)iew Leaderboard");
+		con.println("(q)uit Option");
 		intOption = con.getKey();
 		con.clear();
 		
