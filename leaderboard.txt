@@ -6,3 +6,6 @@ Justin
 4800.0
 statitan
 3800.0
+
+Player
+1000.0

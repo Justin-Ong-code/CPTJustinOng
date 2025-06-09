@@ -53,7 +53,7 @@ public class pokermethods{
 				dblBet = dblBet * 6;
 			}
 		}else{
-			// Determines a four of a kind, full house, three of a kind, two pair, and straight
+			// Determines a four of a kind, full house, three of a kind, two pair, straight, jacks or better, and loss
 			// Provides a multiplier on the bet and rewards the according amount
 			if(intFours == 1){
 				con.println("Four of a Kind");
@@ -80,7 +80,6 @@ public class pokermethods{
 			}
 		}
 		con.sleep(1000);
-		con.println("+$"+dblBet);
 		return dblBet;
 	}
 }

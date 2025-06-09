@@ -12,7 +12,7 @@ public class poker{
 		int intCount2;
 		int intGamesPlayed;
 		int intY;
-		String strOption;
+		int intOption;
 		String strName;
 		String strContinue;
 		
@@ -20,8 +20,10 @@ public class poker{
 		intY = 0;
 		strContinue = "y";
 		
+		// Array for deck
 		intCard = new int[52][3];
 		
+		// Animation where logo slides down
 		while(intY < 720){
 			con.setDrawColor(Color.BLACK);
 			con.fillRect(0, 0, 1280, 720);
@@ -33,13 +35,14 @@ public class poker{
 		}
 
 		// Provides the user with options
-		con.println("Play Game (type '1')");
-		con.println("View Leaderboard (type '2')");
-		con.println("Quit Option (type '3')");
-		strOption = con.readLine();
+		con.println("(P)lay Game");
+		con.println("(V)iew Leaderboard");
+		con.println("(Q)uit Option");
+		intOption = con.getKey();
 		con.clear();
 		
-		if(strOption.equals("1")){
+		if(intOption == 80){
+			// Asks for name
 			con.println("Enter your name:");
 			strName = con.readLine();
 			double dblMoney;
@@ -56,11 +59,14 @@ public class poker{
 			con.clear();
 			
 			while(strContinue.equalsIgnoreCase("y")){
+				// Asks for bet, making sure it isn't greater than the current amount
 				con.println("Current Money: $"+dblMoney);
 				con.sleep(500);
 				con.println("What is your bet?");
 				dblBet = con.readDouble();
 				while(dblBet > dblMoney){
+					con.clear();
+					con.println("Current Money: $"+dblMoney);
 					con.println("Ineligible Funds, Bet Again:");
 					dblBet = con.readDouble();
 				}
@@ -82,6 +88,7 @@ public class poker{
 					}
 					intCard[intCount][2] = intRand;
 				}
+				con.clear();
 	
 				// After Sorting
 				int intValueTemp;
@@ -89,6 +96,10 @@ public class poker{
 				int intRandTemp;
 		
 				// Shuffles the Cards by arranging them by value of the random number
+				con.println("Current Money: $"+dblMoney);
+				con.println("Bet: $"+dblBet);
+				con.println("Shuffling Hand...");
+				con.sleep(4000);
 				for(intCount2 = 0; intCount2 < 52-1; intCount2++){
 					for(intCount = 0; intCount < 52-1; intCount++){
 						if(intCard[intCount][2] > intCard[intCount+1][2]){
@@ -106,7 +117,8 @@ public class poker{
 						}
 					}
 				}
-			
+				
+				// Array for player's hand
 				int intHand[][];
 				intHand = new int[5][2];
 		
@@ -166,7 +178,8 @@ public class poker{
 						}
 					}
 				}
-			
+				
+				// Variables for determining various poker hands
 				int intNextValue;
 				intNextValue = intHand[0][0];
 				int intSuit;
@@ -215,6 +228,7 @@ public class poker{
 				// Determines the type of poker hand the user has with a returning bet
 				con.sleep(1500);
 				dblBet = pokermethods.pokerhands(intHand, intSuit, intStraight, intPairs, intThrees, intFours, dblBet, con);
+				con.println("+$"+dblBet);
 				con.sleep(3000);
 				
 				// Determines the amount of money left after the game
@@ -234,10 +248,10 @@ public class poker{
 					con.println("No more money remaining.");
 					strContinue = "n";
 				}
+				con.clear();
 			}
 			
 			// Shows the final results
-			con.clear();
 			con.println("Final Results:");
 			con.sleep(750);
 			con.println("Name: "+strName);
@@ -255,7 +269,7 @@ public class poker{
 			leaderboard.println(strName);
 			leaderboard.println(dblMoney);
 			leaderboard.close();
-		}else if(strOption.equals("2")){
+		}else if(intOption == 86){
 			TextInputFile scores = new TextInputFile("leaderboard.txt");
 			double dblScore[];
 			double dblScoreTemp;
@@ -306,11 +320,11 @@ public class poker{
 				con.println((intCount+1)+": "+strProfile[intCount]+" - $"+dblScore[intCount]);
 				con.sleep(500);
 			}
-		}else if(strOption.equals("3")){
+		}else if(intOption == 81){
 			// Quits the program
 			con.closeConsole();
-		}else if(strOption.equals("4")){
-			// Hidden option that prints a joke
+		}else if(intOption == 83){
+			// Secret option that prints a joke
 			con.println("When a poker player shares their secrets,");
 			con.sleep(1500);
 			con.println("it's a full-house of revelations.");
