@@ -43,37 +43,37 @@ public class pokermethods{
 			// Checks whether the cards match a royal flush, straight flush, or flush 
 			// Provides a multiplier on the bet and rewards the according amount
 			if(intHand[0][0] == 1 && intHand[1][0] == 10 && intHand[2][0] == 11 && intHand[3][0] == 12 && intHand[4][0] == 13){
-				con.println("Royal Flush");
+				con.println("Royal Flush!");
 				dblBet = dblBet * 800;
 			}else if(intStraight == 5){
-				con.println("Straight Flush");
+				con.println("Straight Flush!");
 				dblBet = dblBet * 50;
 			}else{
-				con.println("Flush");
+				con.println("Flush!");
 				dblBet = dblBet * 6;
 			}
 		}else{
 			// Determines a four of a kind, full house, three of a kind, two pair, straight, jacks or better, and loss
 			// Provides a multiplier on the bet and rewards the according amount
 			if(intFours == 1){
-				con.println("Four of a Kind");
+				con.println("Four of a Kind!");
 				dblBet = dblBet * 25;
 			}else if(intThrees == 1){
 				if(intPairs == 3){
-					con.println("Full House");
+					con.println("Full House!");
 					dblBet = dblBet * 9;
 				}else{
-					con.println("Three of a Kind");
+					con.println("Three of a Kind!");
 					dblBet = dblBet * 3;
 				}
 			}else if(intPairs == 2){
-				con.println("Two Pair");
+				con.println("Two Pair!");
 				dblBet = dblBet * 2;
 			}else if(intStraight == 5){
-				con.println("Straight");
+				con.println("Straight!");
 				dblBet = dblBet * 4;
 			}else if(intHand[0][0] >= 11 || intHand[1][0] >= 11 || intHand[2][0] >= 11 || intHand[3][0] >= 11 || intHand[4][0] >= 11){
-				con.println("Jacks or Better");
+				con.println("Jacks or Better!");
 			}else{
 				con.println("Loss");
 				dblBet = 0;
