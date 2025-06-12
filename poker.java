@@ -5,6 +5,10 @@ import java.awt.image.BufferedImage;
 public class poker{
 	public static void main(String[] args){
 		Console con = new Console("Poker", 1280, 720);
+		// Justin Ong
+		// Poker
+		// Last Modified: June 12, 2025
+		// Version 1.0.2
 		BufferedImage imgLogo = con.loadImage("pokerlogo.jpg");
 		int intCard[][];
 		int intRand;

@@ -3,6 +3,11 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class pokermethods{
+	// Justin Ong
+	// Poker
+	// Last Modified: June 12, 2025
+	// Version 1.0.2
+		
 	// Prints out the user's hand and substitutes certain numbers for a specific value or suit
 	// Value: 1 = Ace, 11 = Jack, 12 = Queen, 13 = King
 	// Suit: 1 = Diamonds, 2 = Clubs, 3 = Hearts, 4 = Spades
